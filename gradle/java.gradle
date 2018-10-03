@@ -1,0 +1,36 @@
+subprojects {
+
+  apply plugin: 'java'
+  sourceCompatibility = targetCompatibility = "$javaVersion"
+
+  apply plugin: 'io.franzbecker.gradle-lombok'
+  lombok {
+    version = project.lombokVersion
+    sha256 = ""
+  }
+
+  apply plugin: 'io.spring.dependency-management'
+
+  /*
+  dependencyManagement {
+    imports {
+      mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+      mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
+  }
+  */
+
+  compileJava.dependsOn(processResources)
+
+  apply plugin: 'net.ltgt.apt'
+
+  dependencies {
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    testCompileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    apt "org.projectlombok:lombok:$project.lombokVersion"
+    testApt "org.projectlombok:lombok:$project.lombokVersion"
+    compile "io.vavr:vavr:$vavrVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+  }
+}

@@ -1,0 +1,20 @@
+version: "2.1"
+
+services:
+
+  gradle-apache-polygene-examples-app:
+    build:
+      context: .
+      dockerfile: gradle/Dockerfile
+    volumes: ["gradle-apache-polygene-examples-app-data:/home/appuser"]
+    networks: [backing-services]
+    ports: ["8080:8080"]
+    #restart: unless-stopped
+    #mem_limit: 838860800 # 800Mb
+
+volumes:
+  gradle-apache-polygene-examples-app-data: {}
+
+networks:
+  backing-services:
+    driver: bridge
